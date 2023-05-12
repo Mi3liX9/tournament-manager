@@ -9,15 +9,16 @@ function AddTeam() {
   const [website, setWebsite] = useState("");
   const [coach, setCoach] = useState("");
   const [manager, setManager] = useState("");
-  const [tournament, setTournament] = useState("");
+  const [tournament_name, setTournament_name] = useState(0);
 
   const handleSubmit = async () => {
-    if (!name || !address || !email || !website || !coach || !manager || !tournament) {
+    if (!name || !address || !email || !website || !coach || !manager || !tournament_name) {
       alert('Please fill all fields');
       return;
     }
   
     try {
+      
       const { data, error } = await supabase.from('Team').insert([{
         name,
         address,
@@ -25,7 +26,7 @@ function AddTeam() {
         website,
         coach,
         manager,
-        tournament,
+        tournament_name,
       }]);
   
       console.log('data:', data);
@@ -44,7 +45,7 @@ function AddTeam() {
       setWebsite('');
       setCoach('');
       setManager('');
-      setTournament('');
+      setTournament_name('');
     } catch (error) {
       console.error(error);
       alert('An error occurred. Please try again later.');
@@ -132,15 +133,15 @@ function AddTeam() {
         <div className="mb-4">
           <label
             className="block text-gray-700 font-bold mb-2"
-            htmlFor="tournament"
+            htmlFor="tournament_name"
           >
             Tournament
           </label>
           <select
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="tournament"
-            value={tournament}
-            onChange={(e) => setTournament(e.target.value)}
+            id="tournament_name"
+            value={tournament_name}
+            onChange={(e) => setTournament_name(e.target.value)}
           >
             <option value="">Select a tournament</option>
             <option value="Tournament 1">Tournament 1</option>
