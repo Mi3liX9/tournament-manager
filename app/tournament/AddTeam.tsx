@@ -15,6 +15,60 @@ function AddTeam() {
             type="text"
             placeholder="Enter team name"
           />
+
+
+<label className="block text-gray-700 font-bold mb-2" htmlFor="address">
+            Team Address
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="address"
+            type="text"
+            placeholder="Enter team address"
+          />
+
+
+<label className="block text-gray-700 font-bold mb-2" htmlFor="email">
+            Team Email
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="name"
+            type="email"
+            placeholder="Enter team email"
+          />
+
+<label className="block text-gray-700 font-bold mb-2" htmlFor="website">
+            Team Website
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="website"
+            type="text"
+            placeholder="Enter team website"
+          />
+
+<label className="block text-gray-700 font-bold mb-2" htmlFor="coach">
+            Team Coach
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="coach"
+            type="text"
+            placeholder="Enter team coach"
+          />
+
+
+<label className="block text-gray-700 font-bold mb-2" htmlFor="manager">
+            Team Manager
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="manager"
+            type="text"
+            placeholder="Enter team manager"
+          />
+          
         </div>
         <div className="mb-4">
           <label
