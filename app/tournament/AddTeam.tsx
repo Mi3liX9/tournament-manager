@@ -34,7 +34,7 @@ function AddTeam() {
           website,
           coach,
           manager,
-          tournament: tournament_number,
+          tournament_number,
         },
       ]);
 
