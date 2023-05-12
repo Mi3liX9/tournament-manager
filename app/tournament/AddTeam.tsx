@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useState } from "react";
 import { supabase } from "@/utils/supabase";
 
@@ -9,47 +9,57 @@ function AddTeam() {
   const [website, setWebsite] = useState("");
   const [coach, setCoach] = useState("");
   const [manager, setManager] = useState("");
-  const [tournament, setTournament] = useState("");
+  const [tournament_number, setTournament] = useState("");
 
   const handleSubmit = async () => {
-    if (!name || !address || !email || !website || !coach || !manager || !tournament) {
-      alert('Please fill all fields');
+    if (
+      !name ||
+      !address ||
+      !email ||
+      !website ||
+      !coach ||
+      !manager ||
+      !tournament_number
+    ) {
+      alert("Please fill all fields");
       return;
     }
-  
+
     try {
-      const { data, error } = await supabase.from('Team').insert([{
-        name,
-        address,
-        email,
-        website,
-        coach,
-        manager,
-        tournament,
-      }]);
-  
-      console.log('data:', data);
-      console.log('error:', error);
-  
+      const { data, error } = await supabase.from("Team").insert([
+        {
+          name,
+          address,
+          email,
+          website,
+          coach,
+          manager,
+          tournament: tournament_number,
+        },
+      ]);
+
+      console.log("data:", data);
+      console.log("error:", error);
+
       if (error) {
-        console.log(error)
-        alert('Failed to add team. Please try again later.');
+        console.log(error);
+        alert("Failed to add team. Please try again later.");
         return;
       }
-  
-      alert('Team added successfully!');
-      setName('');
-      setAddress('');
-      setEmail('');
-      setWebsite('');
-      setCoach('');
-      setManager('');
-      setTournament('');
+
+      alert("Team added successfully!");
+      setName("");
+      setAddress("");
+      setEmail("");
+      setWebsite("");
+      setCoach("");
+      setManager("");
+      setTournament("");
     } catch (error) {
       console.error(error);
-      alert('An error occurred. Please try again later.');
+      alert("An error occurred. Please try again later.");
     }
-  }
+  };
 
   return (
     <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
@@ -68,7 +78,10 @@ function AddTeam() {
             onChange={(e) => setName(e.target.value)}
           />
 
-          <label className="block text-gray-700 font-bold mb-2" htmlFor="address">
+          <label
+            className="block text-gray-700 font-bold mb-2"
+            htmlFor="address"
+          >
             Team Address
           </label>
           <input
@@ -92,7 +105,10 @@ function AddTeam() {
             onChange={(e) => setEmail(e.target.value)}
           />
 
-          <label className="block text-gray-700 font-bold mb-2" htmlFor="website">
+          <label
+            className="block text-gray-700 font-bold mb-2"
+            htmlFor="website"
+          >
             Team Website
           </label>
           <input
@@ -116,7 +132,10 @@ function AddTeam() {
             onChange={(e) => setCoach(e.target.value)}
           />
 
-          <label className="block text-gray-700 font-bold mb-2" htmlFor="manager">
+          <label
+            className="block text-gray-700 font-bold mb-2"
+            htmlFor="manager"
+          >
             Team Manager
           </label>
           <input
@@ -127,7 +146,6 @@ function AddTeam() {
             value={manager}
             onChange={(e) => setManager(e.target.value)}
           />
-
         </div>
         <div className="mb-4">
           <label
@@ -139,7 +157,7 @@ function AddTeam() {
           <select
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="tournament"
-            value={tournament}
+            value={tournament_number}
             onChange={(e) => setTournament(e.target.value)}
           >
             <option value="">Select a tournament</option>
