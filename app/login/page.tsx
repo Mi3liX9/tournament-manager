@@ -1,11 +1,22 @@
 "use client";
 import { supabase } from "@/utils/supabase";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useRouter } from 'next/navigation';
 
 function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const router = useRouter();
+
+
+  useEffect(() => {
+    const { user } =  supabase.auth.getUser();
+    if (user) {
+      router.push("/tournament");
+    }
+  }, []);
+
   const signIn = async () => {
     const { error } = await supabase.auth.signInWithPassword({
       email,
@@ -14,6 +25,9 @@ function LoginPage() {
 
     if (error) {
       setError(error.message);
+    }
+    else{
+      router.push('/tournament')
     }
   };
   return (
