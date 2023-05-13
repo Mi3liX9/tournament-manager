@@ -12,8 +12,9 @@ function LoginPage() {
   useEffect(() => {
     (async function () {
       const { data } = await supabase.auth.getUser();
-      if (data) {
-        router.push("/tournament");
+      if (data.user != null) {
+        console.log(data)
+        router.push("/admin");
       }
     })();
   }, []);
@@ -27,7 +28,7 @@ function LoginPage() {
     if (error) {
       setError(error.message);
     } else {
-      router.push("/tournament");
+      router.push("/admin");
     }
   };
   return (

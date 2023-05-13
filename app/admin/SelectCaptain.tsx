@@ -45,7 +45,7 @@ function SelectCaptain() {
     return
 
     if(Team)
-      return Team[0].id;
+      return Team[0]?.id;
       
 }
 
