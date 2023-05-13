@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import AddTournament from "./AddTournament";
 import AddTeam from "./AddTeam";

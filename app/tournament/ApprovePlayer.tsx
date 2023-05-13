@@ -1,6 +1,53 @@
-import React from "react";
+import { supabase } from "@/utils/supabase";
+import React, { useEffect, useState } from "react";
 
 function ApprovePlayer() {
+  const [players, setPlayers] = useState<any>([]);
+  const [teams, setTeams] = useState<any>([]);
+  const [selectedPlayer, setSelectedPlayer] = useState();
+  const [selectedTeam, setSelectedTeam] = useState();
+
+  useEffect(() => {
+    (async function () {
+      const { data: players } = await supabase
+        .from("Player")
+        .select("*")
+        .is("team_number", null);
+
+      const { data: teams } = await supabase.from("Team").select("*");
+
+      setPlayers(players);
+      setTeams(teams);
+
+      console.log(players);
+    })();
+  }, []);
+
+  const handleApprove = async () => {
+    console.log({ selectedPlayer, selectedTeam });
+
+    if (
+      typeof selectedPlayer === "undefined" ||
+      typeof selectedTeam === "undefined"
+    )
+      return;
+    // TODO: FIX THE ERROR
+    await supabase
+      .from("Player")
+      .update("team_number", parseInt(selectedTeam))
+      .eq("id", parseInt(selectedPlayer));
+
+    setSelectedPlayer(undefined);
+    setSelectedTeam(undefined);
+
+    const { data: players } = await supabase
+      .from("Player")
+      .select("*")
+      .is("team_number", null);
+
+    setPlayers(players);
+  };
+
   return (
     <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
       <h2 className="font-bold text-lg mb-4">Approve Player to Join Team</h2>
@@ -15,11 +62,14 @@ function ApprovePlayer() {
           <select
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="player"
+            onChange={(e) => setSelectedPlayer(e.target.value as any)}
           >
             <option>Select a player</option>
-            <option>Player 1</option>
-            <option>Player 2</option>
-            <option>Player 3</option>
+            {players.map((p: any) => (
+              <option value={p.id} key={p.id}>
+                {p.name}
+              </option>
+            ))}
           </select>
         </div>
         <div className="mb-4">
@@ -29,17 +79,21 @@ function ApprovePlayer() {
           <select
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="team"
+            onChange={(e) => setSelectedTeam(e.target.value as any)}
           >
             <option>Select a team</option>
-            <option>Team 1</option>
-            <option>Team 2</option>
-            <option>Team 3</option>
+            {teams.map((t: any) => (
+              <option value={t.id} key={t.id}>
+                {t.name}
+              </option>
+            ))}
           </select>
         </div>
         <div className="flex items-center justify-between">
           <button
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="button"
+            onClick={handleApprove}
           >
             Approve Player
           </button>
