@@ -6,12 +6,13 @@ import AddTeam from "./AddTeam";
 import SelectCaptain from "./SelectCaptain";
 import ApprovePlayer from "./ApprovePlayer";
 import DeleteTournament from "./DeleteTournament";
+import { useRouter } from "next/navigation";
 
 function TournamentAdmin() {
   const [authenticated, setAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
   const [hydrated, setHydrated] = React.useState(false);
-  
+  const router = useRouter();
 
 
   React.useEffect(() => {
@@ -38,10 +39,26 @@ function TournamentAdmin() {
   if (!authenticated && !loading) {
     return <div className="text-red-500 font-bold">Access Denied.</div>;
   }
-
+  const signOut = async () => {
+    
+      const { error } = await supabase.auth.signOut()
+      if(!error)
+        router.push("/login");
+    };
+  
 
   return (
+    <div >
+       <button
+                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                  type="button"
+                  onClick={signOut}
+                >
+                  Sign Out
+                </button>
+
     <div className="container mx-auto p-4">
+     
       <div className="flex flex-wrap -mx-4">
         <div className="w-full md:w-1/2 px-4 mb-4">
           <AddTournament />
@@ -59,6 +76,7 @@ function TournamentAdmin() {
           <DeleteTournament />
         </div>
       </div>
+    </div>
     </div>
   );
 }
