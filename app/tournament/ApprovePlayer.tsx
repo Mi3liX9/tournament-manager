@@ -29,23 +29,19 @@ function ApprovePlayer() {
     if (
       typeof selectedPlayer === "undefined" ||
       typeof selectedTeam === "undefined"
-    )
+    ) {
+      alert("Please fill all the fields");
       return;
-    // TODO: FIX THE ERROR
+    }
     await supabase
       .from("Player")
-      .update("team_number", parseInt(selectedTeam))
+      .update({"team_number":parseInt(selectedTeam)})
       .eq("id", parseInt(selectedPlayer));
-
+    alert(`Player ${selectedPlayer} have been added to team ${selectedTeam}`);
     setSelectedPlayer(undefined);
     setSelectedTeam(undefined);
 
-    const { data: players } = await supabase
-      .from("Player")
-      .select("*")
-      .is("team_number", null);
-
-    setPlayers(players);
+    
   };
 
   return (
