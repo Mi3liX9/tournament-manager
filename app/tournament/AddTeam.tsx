@@ -1,6 +1,9 @@
 "use client"
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { supabase } from "@/utils/supabase";
+import { Tournament, fetchTournamentNames } from "./fetchTournamnet_name";
+
+
 
 function AddTeam() {
   const [name, setName] = useState("");
@@ -9,16 +12,24 @@ function AddTeam() {
   const [website, setWebsite] = useState("");
   const [coach, setCoach] = useState("");
   const [manager, setManager] = useState("");
-  const [tournament_name, setTournament_name] = useState(0);
+  const [tournamentName, setTournamentName] = useState("");
+  const [tournamentNames, setTournamentNames] = useState<Tournament[]>([]);
+
+  useEffect(() => {
+   fetchTournamentNames().then((tournaments) => {
+    if(tournaments != undefined)
+      setTournamentNames(tournaments);
+   })
+    
+  }, []);
 
   const handleSubmit = async () => {
-    if (!name || !address || !email || !website || !coach || !manager || !tournament_name) {
+    if (!name || !address || !email || !website || !coach || !manager || !tournamentName) {
       alert('Please fill all fields');
       return;
     }
-  
+
     try {
-      
       const { data, error } = await supabase.from('Team').insert([{
         name,
         address,
@@ -26,18 +37,18 @@ function AddTeam() {
         website,
         coach,
         manager,
-        tournament_name,
+        tournament_name: tournamentName,
       }]);
-  
+
       console.log('data:', data);
       console.log('error:', error);
-  
+
       if (error) {
         console.log(error)
         alert('Failed to add team. Please try again later.');
         return;
       }
-  
+
       alert('Team added successfully!');
       setName('');
       setAddress('');
@@ -45,7 +56,7 @@ function AddTeam() {
       setWebsite('');
       setCoach('');
       setManager('');
-      setTournament_name('');
+      setTournamentName('');
     } catch (error) {
       console.error(error);
       alert('An error occurred. Please try again later.');
@@ -128,7 +139,6 @@ function AddTeam() {
             value={manager}
             onChange={(e) => setManager(e.target.value)}
           />
-
         </div>
         <div className="mb-4">
           <label
@@ -140,13 +150,15 @@ function AddTeam() {
           <select
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="tournament_name"
-            value={tournament_name}
-            onChange={(e) => setTournament_name(e.target.value)}
+            value={tournamentName}
+            onChange={(e) => setTournamentName(e.target.value)}
           >
             <option value="">Select a tournament</option>
-            <option value="Tournament 1">Tournament 1</option>
-            <option value="Tournament 2">Tournament 2</option>
-            <option value="Tournament 3">Tournament 3</option>
+            {tournamentNames.map((tournament) => (
+              <option key={tournament.name} value={tournament.name}>
+                {tournament.name}
+              </option>
+            ))}
           </select>
         </div>
         <div className="flex items-center justify-between">
