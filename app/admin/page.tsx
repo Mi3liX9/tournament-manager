@@ -10,8 +10,12 @@ import DeleteTournament from "./DeleteTournament";
 function TournamentAdmin() {
   const [authenticated, setAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [hydrated, setHydrated] = React.useState(false);
+  
 
-  useEffect(() => {
+
+  React.useEffect(() => {
+    setHydrated(true)
     async function checkAuthentication() {
       const { data } = await supabase.auth.getUser();
       if (data.user != null) {
@@ -22,14 +26,19 @@ function TournamentAdmin() {
     checkAuthentication();
   }, []);
 
+  if (!hydrated) {
+    // Returns null on first render, so the client and server match
+    return null;
+}
+
   if (loading) {
     return <div>Loading...</div>;
   }
 
-  if (!authenticated) {
+  if (!authenticated && !loading) {
     return <div className="text-red-500 font-bold">Access Denied.</div>;
   }
-  if(authenticated) {
+
 
   return (
     <div className="container mx-auto p-4">
@@ -53,6 +62,6 @@ function TournamentAdmin() {
     </div>
   );
 }
-}
+
 
 export default TournamentAdmin;
