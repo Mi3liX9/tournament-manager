@@ -2,12 +2,14 @@
 import { supabase } from "@/utils/supabase";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const router = useRouter();
+  
 
   useEffect(() => {
     (async function () {
@@ -18,6 +20,7 @@ function LoginPage() {
       }
     })();
   }, []);
+
 
   const signIn = async () => {
     const { error } = await supabase.auth.signInWithPassword({
@@ -85,12 +88,11 @@ function LoginPage() {
                 >
                   Sign In
                 </button>
-                <a
-                  className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
-                  href="#"
-                >
-                  Forgot Password?
-                </a>
+                <Link href = '/' className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">
+              
+                  Continue as a Guest
+               
+                </Link>
               </div>
             </form>
           </div>
