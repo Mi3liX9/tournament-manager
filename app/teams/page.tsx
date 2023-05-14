@@ -4,22 +4,22 @@ import React, { useEffect, useState } from "react";
 import "tailwindcss/tailwind.css";
 
 function TeamMembers() {
-  const [teams, setTeams] = useState([]);
-  const [selectedTeam, setSelectedTeam] = useState({});
-  const [players, setPlayers] = useState([]);
+  const [teams, setTeams] = useState<any[]>([]);
+  const [selectedTeam, setSelectedTeam] = useState<any>({});
+  const [players, setPlayers] = useState<any[]>([]);
   useEffect(() => {
     (async function () {
       const { data: teams } = await supabase.from("Team").select("*");
       setTeams(teams as any);
     })();
   }, []);
-  const handleTeamSelect = async (team_id: any) => {
+  const handleTeamSelect = async (team_id: string) => {
     setSelectedTeam(teams.find((t: any) => t.id === parseInt(team_id))!);
     const { data: players } = await supabase
       .from("Player")
       .select("*")
-      .eq("team_id", selectedTeam.id);
-    setPlayers(players);
+      .eq("team_number", parseInt(team_id));
+    setPlayers((players as []) || []);
   };
 
   return (
