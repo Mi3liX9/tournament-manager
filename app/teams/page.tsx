@@ -48,18 +48,16 @@ function TeamMembers() {
         <table className="table-auto">
           <thead>
             <tr>
-              <th className="px-4 py-2">Manager</th>
-              <th className="px-4 py-2">Coach</th>
-              <th className="px-4 py-2">Captain</th>
-              <th className="px-4 py-2">Player</th>
+            <th className="px-4 py-2">Players</th>
+              <th className="px-4 py-2">Manager: {selectedTeam.manager}</th>
+              <th className="px-4 py-2">Coach: {selectedTeam.coach}</th>
+              <th className="px-4 py-2">Captain: {selectedTeam.captin}</th>
+              
             </tr>
           </thead>
           <tbody>
             {(players || []).map((player: any) => (
               <tr key={player.id}>
-                <td className="border px-4 py-2">{selectedTeam.manager}</td>
-                <td className="border px-4 py-2">{selectedTeam.coach}</td>
-                <td className="border px-4 py-2">{selectedTeam.captin}</td>
                 <td className="border px-4 py-2">{player.name}</td>
               </tr>
             ))}
