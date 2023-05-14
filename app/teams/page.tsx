@@ -41,6 +41,10 @@ function TeamMembers() {
         </select>
       </div>
       {selectedTeam ? (
+        <h2 className="text-xl">Selected Team: {selectedTeam.name}</h2>
+      ) : null}
+
+      {selectedTeam ? (
         <table className="table-auto">
           <thead>
             <tr>
