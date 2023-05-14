@@ -1,12 +1,25 @@
-"use client"
-import React, { useState } from 'react';
-import 'tailwindcss/tailwind.css';
+"use client";
+import { supabase } from "@/utils/supabase";
+import React, { useEffect, useState } from "react";
+import "tailwindcss/tailwind.css";
 
 function TeamMembers() {
-  const [selectedTeam, setSelectedTeam] = useState('');
-
-  const handleTeamSelect = (team:any) => {
-    setSelectedTeam(team);
+  const [teams, setTeams] = useState([]);
+  const [selectedTeam, setSelectedTeam] = useState({});
+  const [players, setPlayers] = useState([]);
+  useEffect(() => {
+    (async function () {
+      const { data: teams } = await supabase.from("Team").select("*");
+      setTeams(teams as any);
+    })();
+  }, []);
+  const handleTeamSelect = async (team_id: any) => {
+    setSelectedTeam(teams.find((t: any) => t.id === parseInt(team_id))!);
+    const { data: players } = await supabase
+      .from("Player")
+      .select("*")
+      .eq("team_id", selectedTeam.id);
+    setPlayers(players);
   };
 
   return (
@@ -20,9 +33,11 @@ function TeamMembers() {
           onChange={(e) => handleTeamSelect(e.target.value)}
         >
           <option value="">Select a team</option>
-          <option value="Team A">Team A</option>
-          <option value="Team B">Team B</option>
-          <option value="Team C">Team C</option>
+          {teams.map((team) => (
+            <option value={team.id} key={team.id}>
+              {team.name}
+            </option>
+          ))}
         </select>
       </div>
       {selectedTeam ? (
@@ -36,24 +51,14 @@ function TeamMembers() {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td className="border px-4 py-2">Manager Name</td>
-              <td className="border px-4 py-2">Coach Name</td>
-              <td className="border px-4 py-2">Captain Name</td>
-              <td className="border px-4 py-2">Player Name</td>
-            </tr>
-            <tr>
-              <td className="border px-4 py-2">Manager Name</td>
-              <td className="border px-4 py-2">Coach Name</td>
-              <td className="border px-4 py-2">Captain Name</td>
-              <td className="border px-4 py-2">Player Name</td>
-            </tr>
-            <tr>
-              <td className="border px-4 py-2">Manager Name</td>
-              <td className="border px-4 py-2">Coach Name</td>
-              <td className="border px-4 py-2">Captain Name</td>
-              <td className="border px-4 py-2">Player Name</td>
-            </tr>
+            {(players || []).map((player: any) => (
+              <tr key={player.id}>
+                <td className="border px-4 py-2">{selectedTeam.manager}</td>
+                <td className="border px-4 py-2">{selectedTeam.coach}</td>
+                <td className="border px-4 py-2">{selectedTeam.captin}</td>
+                <td className="border px-4 py-2">{player.name}</td>
+              </tr>
+            ))}
           </tbody>
         </table>
       ) : (

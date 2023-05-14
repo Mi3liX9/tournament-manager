@@ -11,8 +11,6 @@ export default function CardsPage() {
         .from("Card")
         .select("*, Player(*), Tournament(*)");
       setCards(cards as any);
-
-      console.log(cards);
     })();
   }, []);
   return (
