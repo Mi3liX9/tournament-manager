@@ -1,22 +1,22 @@
-"use client"
-import Image from 'next/image'
-import React from 'react';
+"use client";
+import Image from "next/image";
+import React from "react";
 
 export default function Home() {
   const [hydrated, setHydrated] = React.useState(false);
   React.useEffect(() => {
-    setHydrated(true)
-  },[])
+    setHydrated(true);
+  }, []);
 
   if (!hydrated) {
     // Returns null on first render, so the client and server match
     return null;
-}
+  }
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
         <p className="welcome-page">
-          <h1>Welcome To The Guest Page</h1>  
+          <h1>Welcome To The Guest Page</h1>
         </p>
       </div>
 
@@ -30,16 +30,15 @@ export default function Home() {
           priority
         />
       </div>
-      <br/>
+      <br />
       <div className="mb-32 grid text-center lg:mb-0 lg:grid-cols-4 lg:text-left">
         <a
-          href=""
+          href="./results"
           className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
           rel="noopener noreferrer"
         >
           <h2 className={`mb-3 text-2xl font-semibold`}>
-            Results{' '}
+            Results{" "}
             <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
               -&gt;
             </span>
@@ -50,57 +49,55 @@ export default function Home() {
         </a>
 
         <a
-          href=""
+          href="./goals"
           className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800 hover:dark:bg-opacity-30"
-          target="_blank"
           rel="noopener noreferrer"
         >
           <h2 className={`mb-3 text-2xl font-semibold`}>
-            Goals{' '}
+            Goals{" "}
             <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
               -&gt;
             </span>
           </h2>
           <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-           Browse the player with the highest goal scored in all the tournaments.
+            Browse the player with the highest goal scored in all the
+            tournaments.
           </p>
         </a>
 
         <a
-          href=""
+          href="./cards"
           className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
           rel="noopener noreferrer"
         >
           <h2 className={`mb-3 text-2xl font-semibold`}>
-            Cards{' '}
+            Cards{" "}
             <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
               -&gt;
             </span>
           </h2>
           <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Browse the players who received red cards in each team. 
+            Browse the players who received red cards in each team.
           </p>
         </a>
 
         <a
-          href=""
+          href="teams"
           className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
           rel="noopener noreferrer"
         >
           <h2 className={`mb-3 text-2xl font-semibold`}>
-            Teams{' '}
+            Teams{" "}
             <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
               -&gt;
             </span>
           </h2>
           <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Browse the all members of a selected team including manager, coach, captain and
-            players
+            Browse the all members of a selected team including manager, coach,
+            captain and players
           </p>
         </a>
       </div>
     </main>
-  )
+  );
 }
